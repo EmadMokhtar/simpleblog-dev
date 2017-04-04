@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
+    'el_pagination',
+    'markdown_deux',
+    'pagedown',
     'simpleblog',
 ]
 
@@ -58,7 +62,7 @@ ROOT_URLCONF = 'simpleblog_dev.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
