@@ -11,6 +11,19 @@ from .signals import save_comment
 
 
 @python_2_unicode_compatible
+class PostCategory(models.Model):
+    name = models.CharField(max_length=25, verbose_name=_("name"))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('category')
+        verbose_name_plural = _('categories')
+        ordering = ['name']
+
+
+@python_2_unicode_compatible
 class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name=_("title"))
     slug = models.SlugField()
@@ -21,6 +34,8 @@ class Post(models.Model):
     modified = models.DateTimeField(null=True, verbose_name=_("modified"))
     posted_by = models.ForeignKey(settings.AUTH_USER_MODEL,
                                   verbose_name=_("posted by"))
+    category = models.ForeignKey(PostCategory, verbose_name=_("category"),
+                                 null=True, blank=True, related_name="posts")
 
     allow_comments = models.BooleanField(
         default=True, verbose_name=_("allow comments"))
@@ -64,9 +79,9 @@ class Comment(models.Model):
         max_length=50, default='anonymous', verbose_name=_("user name"))
     user_email = models.EmailField(blank=True, verbose_name=_("user email"))
 
-
     def __str__(self):
         return self.bodytext
+
     class Meta:
         verbose_name = _('comment')
         verbose_name_plural = _('comments')
