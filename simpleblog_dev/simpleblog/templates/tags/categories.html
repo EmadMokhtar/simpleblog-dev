@@ -1,0 +1,17 @@
+
+{% load humanize %}
+
+<section>
+	<header>
+		<h1>Blog Categories</h1>
+	</header>
+	<ul>
+		{% for category in blog_categories %}
+		<li>
+			<a href="{{ category.get_absolute_url }}">
+				<h2>{{ category }}</h2>
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+</section>
