@@ -72,7 +72,7 @@ class BlogDetailView(DateDetailView):
 
     def render_to_response(self, context, **response_kwargs):
         """
-        Returns a response with a template depending if the request is ajax 
+        Returns a response with a template depending if the request is ajax
         or not and it renders with the given context.
         """
         if self.request.is_ajax():
@@ -85,3 +85,19 @@ class BlogDetailView(DateDetailView):
             context=context,
             **response_kwargs
         )
+
+
+class CategoryListView(AjaxListView):
+    context_object_name = "posts"
+    queryset = Post.objects.all().select_related()
+    template_name = 'simpleblog/catogery_list.html'
+
+    def get_queryset(self):
+        qs = super(CategoryListView, self).get_queryset()
+        posts_category = self.kwargs['category']
+        return qs.filter(category__name=posts_category)
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryListView, self).get_context_data(**kwargs)
+        context['category'] = self.kwargs['category']
+        return context
